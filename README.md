@@ -1,7 +1,9 @@
 # My Skeleton App
 ===========
 
-## User Info (Twitter.user)
+## Objects
+
+### Twitter User
 
 ``` ruby
   <Twitter::User:0x007ffd3b98bc88 
@@ -76,7 +78,7 @@
      :notifications=>false}>
 ```
 
-## Tweet Info (Twitter.user_timeline)
+### Tweet
 
 ``` ruby
 <Twitter::Tweet:0x007ffd3d0af1d0 
@@ -146,7 +148,10 @@
    :country_code=>"US",
    :country=>"United States",
    :bounding_box=>{:type=>"Polygon",
-   :coordinates=>[[[-122.41018188, 37.79022798], [-122.40392687999999, 37.79022798], [-122.40392687999999, 37.79798004], [-122.41018188, 37.79798004]]]},
+   :coordinates=>[[[ -122.41018188, 37.79022798],
+                    [-122.40392687999999, 37.79022798],
+                    [-122.40392687999999, 37.79798004],
+                    [-122.41018188, 37.79798004]]]},
    :attributes=>{}},
    :contributors=>nil,
    :retweet_count=>0,
