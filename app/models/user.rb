@@ -11,10 +11,32 @@ class User < ActiveRecord::Base
 
   include BCrypt
 
-  def tweets_scale?
+
+  MAX_REFRESH_INTERVAL = 24 hours # TODO
+
+  def average_tweet_interval
+
+  end
+
+  def time_since_last_tweet_check
     
   end
 
+  def stale_threshold
+    if average_tweet_interval > MAX_REFRESH_INTERVAL
+      MAX_REFRESH_INTERVAL
+    else
+      average_tweet_interval
+    end
+  end
+
+  def tweets_stale?
+    if time_since_last_tweet_check > stale_threshold
+      true
+    else
+      false
+    end
+  end
 
 
   def fetch_tweets!
@@ -40,5 +62,7 @@ class User < ActiveRecord::Base
     return user if user && (user.password == password)
     nil # either invalid user_name or wrong password
   end
+
+
 
 end
