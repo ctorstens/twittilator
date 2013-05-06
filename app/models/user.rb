@@ -12,14 +12,19 @@ class User < ActiveRecord::Base
   include BCrypt
 
 
-  MAX_REFRESH_INTERVAL = 24 hours # TODO
+  MAX_REFRESH_INTERVAL = 24 * 60 * 60 # seconds in a day
+  NUM_OF_SAMPLE_TWEETS = 10 # num of tweets to look at to compute average
+
 
   def average_tweet_interval
-
+    most_recent_tweets = Twitter.user_timeline(self.twitter_handle).take(NUM_OF_SAMPLE_TWEETS)
+    most_recent_times = most_recent_tweets.map {|tweet| tweet.created_at}
+    arr_diff = most_recent_times.reverse.each_cons(2).map {|a,b| b - a }
+    arr_diff.inject(0) {|sum, time| sum + time}.to_f / NUM_OF_SAMPLE_TWEETS
   end
 
   def time_since_last_tweet_check
-    
+    Time.now.getutc - self.most_recent_refresh
   end
 
   def stale_threshold
@@ -38,12 +43,12 @@ class User < ActiveRecord::Base
     end
   end
 
-
   def fetch_tweets!
     fetched_tweets = Twitter.user_timeline(self.twitter_handle).map {|tweet| tweet.text}
     fetched_tweets.each do |t| 
       self.tweets << Tweet.create(:text => t)
     end
+    self.most_recent_refresh = Time.now.getutc # reset refresh clock
     self.save
   end
 
@@ -62,7 +67,4 @@ class User < ActiveRecord::Base
     return user if user && (user.password == password)
     nil # either invalid user_name or wrong password
   end
-
-
-
 end
