@@ -35,3 +35,10 @@ require APP_ROOT.join('config', 'database')
 require 'bcrypt'
 
 require 'twitter'
+
+Twitter.configure do |config|
+  config.consumer_key = "go1bkDQzzBHmWPmCBI35ew"
+  config.consumer_secret = "K7UC67PbD6Cam138vueYYhoDafmsx4YWG32FkR22Wc"
+  config.oauth_token = "138671360-krFLXP40u5XozPKCFFVAkjEiGNJruTLVIJH7t4T9"
+  config.oauth_token_secret = "tlI1M1Rte8Mdj2kx1hdYCtutO3aoxD347I7JACFDXAk"
+end
