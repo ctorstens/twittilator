@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :email
       t.string :password_hash
       t.string :perishable_token
+      t.string :twitter_handle
 
       t.timestamps
     end
